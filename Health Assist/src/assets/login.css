@@ -1,0 +1,126 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* body {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+} */
+
+.custom-login-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    width: 150%;
+    max-width: 400px;
+    animation: fadeIn 0.8s ease-in-out;
+    text-align: center;
+    margin-top:150px;
+    margin-left: 650px;
+
+}
+
+.custom-login-title {
+    font-size: 24px;
+    color: #6a11cb;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.custom-login-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.custom-login-form {
+    text-align: left;
+}
+
+.custom-form-group {
+    margin-bottom: 15px;
+}
+
+.custom-label {
+    display: block;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 6px rgba(106, 17, 203, 0.3);
+    outline: none;
+}
+
+.custom-login-button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.custom-login-button:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    transform: translateY(-3px);
+}
+
+.custom-forgot-password,
+.custom-signup-link {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #666;
+}
+
+.custom-forgot-password a,
+.custom-signup-link a {
+    color: #6a11cb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.custom-forgot-password a:hover,
+.custom-signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

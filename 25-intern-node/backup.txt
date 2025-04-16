@@ -1,0 +1,55 @@
+
+
+app.js
+console.log("hello")
+var user = require("./user")
+console.log(user)
+console.log(user.userName)
+console.log(user.userAge)
+user.printUserData(150);
+
+
+user.js
+console.log("user file loaded....")
+var userName = "Dp"
+var userAge = 23
+
+const printUserData =(a)=>{
+    console.log("print user data from user.js file",a)
+};
+module.exports = {
+    userName,userAge,printUserData
+}
+
+
+app.js
+app.get("/employee",(req,res)=>{
+    res.json({
+        Message: "employeee api called.....",
+        Employee_data: [
+            Employee1={
+                id : 101,
+                Name:"Dp",
+                Salary:100000
+            }, 
+            Employee2={
+                id : 102,
+                Name:"Op" ,
+                Salary:15000
+            },
+            Employee3={
+                id : 103,
+                Name:"Sp",
+                Salary:10000
+            }
+        ]
+    })
+});
+
+app.get("/user",(req,res)=>{
+    res.json({
+        Message: "user api called.....",
+        data: ["ram","shyam","seeta"]
+    })
+});
+

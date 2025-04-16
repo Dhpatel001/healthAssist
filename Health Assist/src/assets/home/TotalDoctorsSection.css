@@ -1,0 +1,61 @@
+.total-doctors-section {
+    background: linear-gradient(to right, #e0f7fa); /* Blue gradient background */
+    padding: 2rem 0;
+    color: #0b0000;
+    /* text-align: center; */
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+  }
+  
+  .total-doctors-section .overlay {
+    display: flex;
+    justify-content: space-evenly;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    gap: 2rem;
+  }
+  
+  .stat-card {
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    /* text-align: center; */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+    max-width: 220px;
+    min-width: 180px;
+  }
+  
+  .stat-card:hover {
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .stat-card .icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-card .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .stat-card .stat-label {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .total-doctors-section .overlay {
+      flex-direction: column;
+    }
+  
+    .stat-card {
+      max-width: 100%;
+    }
+  }
+  

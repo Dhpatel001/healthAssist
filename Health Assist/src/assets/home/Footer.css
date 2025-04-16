@@ -1,0 +1,158 @@
+/* Footer Styles */
+.footer {
+    background: #1662c6;
+    color: white;
+    padding: 50px 0;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .container {
+    width: 85%;
+    margin: auto;
+  }
+  
+  /* Footer Sections */
+  .footer-sections {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px;
+  }
+  
+  .footer-section h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .footer-line {
+    width: 50px;
+    height: 3px;
+    background: white;
+    margin-bottom: 15px;
+  }
+  
+  /* Social Icons */
+  .footer-icons a {
+    color: white;
+    margin-right: 10px;
+    font-size: 20px;
+    transition: 0.3s ease;
+  }
+  
+  .footer-icons a:hover {
+    color: #f7b731;
+  }
+  
+  /* Quick Links */
+  .footer-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .footer-links li:hover {
+    color: #f7b731;
+  }
+  
+  /* Open Hours */
+  .footer-hours {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .footer-hours li {
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+  }
+  
+  /* Newsletter */
+  .newsletter {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .newsletter input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .newsletter button {
+    background: white;
+    border: none;
+    padding: 10px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+  }
+  
+  .newsletter button i {
+    color: #1662c6;
+    font-size: 18px;
+  }
+  
+  /* Footer Bottom */
+  .footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    font-size: 14px;
+  }
+  
+  /* Scroll to Top Button */
+  .scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    color: #1662c6;
+    border: none;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .scroll-to-top:hover {
+    background: #f7b731;
+    color: white;
+  }
+  
+  /* Show Scroll Button when user scrolls */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      visibility: hidden;
+    }
+    to {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  .show-scroll {
+    opacity: 1;
+    visibility: visible;
+    animation: fadeIn 0.5s;
+  }
+  

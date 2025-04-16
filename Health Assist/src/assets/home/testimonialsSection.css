@@ -1,0 +1,110 @@
+
+
+
+
+.testimonials-section {
+    /* text-align: center; */
+    padding: 60px 20px;
+    background: linear-gradient(to right, rgb(37, 150, 190), rgba(74, 74, 147, 0.5)), 
+                url("../images/DoctorAndPatient.jpg"); /* Replace with actual background */
+    background-size: cover;
+    background-position: center;
+    color: white;
+  }
+  
+  .testimonials-header h2 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+  }
+  
+  .divider {
+    width: 60px;
+    height: 3px;
+    background-color: white;
+    margin: 10px auto;
+  }
+  
+  .testimonials-slider {
+    display: flex;
+    /* justify-content: center; */
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+  }
+  
+  .testimonial-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    max-width: 320px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .testimonial-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .testimonial-text {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .testimonial-footer {
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 10px;
+  }
+  
+  .testimonial-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .testimonial-name {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* Indicators */
+  .testimonials-indicators {
+    margin-top: 20px;
+  }
+  
+  .indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #ddd;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+  
+  .indicator.active {
+    background-color: white;
+  }
+  
+  /* Animation */
+  .animate-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-in-out forwards;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

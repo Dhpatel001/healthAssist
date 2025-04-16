@@ -1,0 +1,139 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    
+    
+}
+
+
+/* body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    padding: 15px;
+} */
+
+input {
+    width: 100%;
+}
+
+.custom-signup-wrapper {
+    
+    width: 150%;
+    max-width: 420px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: fadeIn 0.8s ease-in-out;
+    margin-top:150px;
+    margin-left: 650px;
+}
+
+.custom-signup-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #6a11cb;
+    text-align: center;
+    margin-bottom: 5px;
+}
+.custom-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.custom-signup-subtitle {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.custom-signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-input-group {
+    margin-bottom: 15px;
+}
+
+.custom-input-label {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+.custom-input-field {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.custom-input-field:focus {
+    border-color: #4facfe;
+    outline: none;
+    box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+}
+
+.custom-submit-button {
+    background: linear-gradient(135deg, #4facfe, #6a11cb);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 10px;
+}
+
+.custom-submit-button:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+}
+
+.custom-login-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+}
+
+.custom-login-link a {
+    color: #4facfe;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.custom-login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

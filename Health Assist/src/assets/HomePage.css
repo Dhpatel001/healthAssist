@@ -1,0 +1,165 @@
+/* General */
+.homepage-container {
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, #007bff 40%, #0056b3);
+  color: white;
+  padding: 80px 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-title {
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  margin-bottom: 20px;
+}
+
+.hero-buttons {
+  margin-top: 15px;
+}
+
+.hero-buttons .btn-custom {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+/* How It Works */
+.how-it-works {
+  text-align: center;
+  padding: 60px 0;
+  background-color: white;
+}
+
+.how-card {
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.how-card:hover {
+  transform: scale(1.05);
+}
+
+.step-icon {
+  width: 60px;
+  height: 60px;
+  margin: 10px auto;
+}
+
+/* Key Features */
+.key-features {
+  text-align: center;
+  padding: 60px 0;
+  background-color: #f1f1f1;
+}
+
+.feature-card {
+  padding: 20px;
+  border-left: 5px solid #007bff;
+  transition: transform 0.3s ease-in-out;
+}
+
+.feature-card:hover {
+  transform: scale(1.05);
+}
+
+/* Testimonials */
+.testimonials {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.testimonial-card {
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.testimonial-avatar {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.testimonial-author {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+/* CTA */
+.cta-section {
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
+}
+
+.cta-title {
+  margin-bottom: 20px;
+}
+
+/* Footer */
+.footer {
+  background-color: #343a40;
+  text-align: center;
+  padding: 15px;
+  color: white;
+}
+/* Slick Slider Navigation Button Styles */
+.slick-prev, .slick-next {
+  background-color: #7B1FA2 !important; /* Purple shade matching UI */
+  border-radius: 50%; /* Make it circular */
+  width: 40px; /* Set button width */
+  height: 40px; /* Set button height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Change arrow color */
+.slick-prev:before, .slick-next:before {
+  color: white !important; /* White arrow */
+  font-size: 20px !important; /* Adjust icon size */
+}
+
+/* Hover effect */
+.slick-prev:hover, .slick-next:hover {
+  background-color: #9C27B0 !important; /* Lighter purple on hover */
+}
+
+/* Adjust positioning */
+.slick-prev {
+  left: -50px;
+}
+
+.slick-next {
+  right: -50px;
+}
+.section {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  margin: 30px 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+

@@ -1,0 +1,70 @@
+<div className="card card-primary">
+  <div className="card-header">
+    <h3 className="card-title">Doctor Profile</h3>
+    <div className="card-tools">
+      <button
+        type="button"
+        className="btn btn-tool"
+        data-card-widget="collapse"
+        title="Collapse"
+        fdprocessedid="n2va42"
+      >
+        <i className="fas fa-minus" />
+      </button>
+    </div>
+  </div>
+  <div className="card-body">
+    <div className="form-group">
+      <label htmlFor="inputName">Doctor Name</label>
+      <input
+        type="text"
+        id="inputName"
+        className="form-control"
+        fdprocessedid="23gyqh"
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="inputDescription">Doctor Information</label>
+      <textarea
+        id="inputDescription"
+        className="form-control"
+        rows={4}
+        defaultValue={""}
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="inputStatus">Status</label>
+      <select
+        id="inputStatus"
+        className="form-control custom-select"
+        fdprocessedid="vcmxse"
+      >
+        <option selected="" disabled="">
+          Select one
+        </option>
+        <option>On Hold</option>
+        <option>Canceled</option>
+        <option>Success</option>
+      </select>
+    </div>
+    <div className="form-group">
+      <label htmlFor="inputClientCompany">Educational background</label>
+      <input
+        type="text"
+        id="inputClientCompany"
+        className="form-control"
+        fdprocessedid="b50l0o"
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="inputProjectLeader">Specialties</label>
+      <input
+        type="text"
+        id="inputProjectLeader"
+        className="form-control"
+        fdprocessedid="j9eqqa"
+      />
+    </div>
+  </div>
+  {/* /.card-body */}
+</div>
