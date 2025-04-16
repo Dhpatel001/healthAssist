@@ -136,20 +136,20 @@ const RazorpayPayment = ({ appointmentData, onPaymentSuccess, onPaymentClose }) 
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
-
+  
     if (!res) {
       setError("Razorpay SDK failed to load. Are you online?");
       setLoading(false);
       return;
     }
-
+  
     const options = {
       key: "rzp_test_BJfA9tfictA1Jg",
       amount: (appointmentData.amount || 500) * 100,
       currency: "INR",
       name: "MediCare Clinic",
       description: `Appointment with ${appointmentData.doctorName}`,
-      payment_capture:1,
+      payment_capture: 1,
       handler: async function (response) {
         try {
           const updateResponse = await axios.patch(
@@ -159,15 +159,13 @@ const RazorpayPayment = ({ appointmentData, onPaymentSuccess, onPaymentClose }) 
               paymentId: response.razorpay_payment_id,
               paymentStatus: "Completed",
               orderId: response.razorpay_order_id,
-              signature: response.razorpay_signature
+              signature: response.razorpay_signature,
+              amount: appointmentData.amount // Make sure to send the amount
             }
           );
           
-          console.log('Backend update response:', updateResponse.data);
-          
           if (updateResponse.data.success) {
-            console.log('Calling onPaymentSuccess');
-            onPaymentSuccess(); // Make sure this is being called
+            onPaymentSuccess();
           } else {
             setError("Payment successful but failed to update appointment status");
           }
@@ -190,7 +188,7 @@ const RazorpayPayment = ({ appointmentData, onPaymentSuccess, onPaymentClose }) 
         }
       }
     };
-
+  
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
     setLoading(false);

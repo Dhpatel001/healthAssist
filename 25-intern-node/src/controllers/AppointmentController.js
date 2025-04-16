@@ -896,34 +896,63 @@ const confirmPayment = async (req, res) => {
         status: "Confirmed",
         paymentId,
         paymentStatus: paymentStatus || "Completed",
-        paymentDate: new Date()
+        paymentDate: new Date(),
+        orderId,
+        signature
       },
       { new: true }
     );
 
-    // Only create payment record if Payment model exists
+    // Create payment record
     let paymentRecord = null;
     try {
-      if (typeof Payment !== 'undefined') {
-        paymentRecord = new Payment({
-          appointmentId: appointment._id,
-          doctorId: appointment.doctorId,
-          userId: appointment.userId,
-          amount: paymentAmount, // Use the calculated amount
-          razorpayPaymentId: paymentId,
-          razorpayOrderId: orderId,
-          razorpaySignature: signature,
-          status: 'captured',
-          paymentMethod: 'razorpay',
-          capturedAt: new Date()
-        });
-        await paymentRecord.save();
-      }
+      paymentRecord = new Payment({
+        appointmentId: appointment._id,
+        doctorId: appointment.doctorId,
+        userId: appointment.userId,
+        amount: paymentAmount, // Use the calculated amount
+        razorpayPaymentId: paymentId,
+        razorpayOrderId: orderId,
+        razorpaySignature: signature,
+        status: 'captured',
+        paymentMethod: 'razorpay',
+        currency: 'INR',
+        capturedAt: new Date()
+      });
+      await paymentRecord.save();
     } catch (paymentError) {
       console.error("Error saving payment record:", paymentError);
+      return res.status(500).json({
+        success: false,
+        message: "Payment recorded but failed to save payment details",
+        error: paymentError.message
+      });
     }
 
-    // ... rest of the function remains the same ...
+    // Create confirmation notification
+    try {
+      await HealthInsight.create({
+        userId: appointment.userId,
+        doctorId: appointment.doctorId,
+        appointmentId: appointment._id,
+        alertType: 'Payment',
+        title: 'Payment Received',
+        message: `Your payment of ₹${paymentAmount} for appointment has been received`,
+        priority: 'High'
+      });
+    } catch (insightError) {
+      console.error("Error creating confirmation insight:", insightError);
+    }
+
+    res.status(200).json({ 
+      success: true,
+      message: "Appointment confirmed successfully",
+      data: {
+        appointment: updatedAppointment,
+        payment: paymentRecord
+      }
+    });
+
   } catch (err) {
     res.status(500).json({ 
       success: false,
