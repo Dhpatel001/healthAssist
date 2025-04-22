@@ -162,44 +162,112 @@ const signup = async (req, res) => {
 //   }
 // };
 
-const loginDoctor = async(req, res) => {
+
+
+
+const loginDoctor = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const foundDoctorFromEmail = await doctorModel.findOne({email}).populate("roleId");
-    
-    if (!foundDoctorFromEmail) {
-      return res.status(404).json({ message: "Email not found" });
-    }
-
-    const isMatch = bcrypt.compareSync(password, foundDoctorFromEmail.password);
-    
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    if (foundDoctorFromEmail.verificationStatus === 'pending') {
-      return res.status(403).json({ 
-        message: "Your account is pending admin approval" 
+    // 1. Basic validation
+    if (!email || !password) {
+      return res.status(400).json({ 
+        success: false,
+        message: "Email and password are required" 
       });
     }
 
-    if (foundDoctorFromEmail.verificationStatus === 'rejected') {
-      return res.status(403).json({ 
-        message: "Your account has been rejected. Please contact admin." 
+    // 2. Find doctor by email
+    const doctor = await doctorModel.findOne({ email }).populate("roleId");
+    
+    if (!doctor) {
+      return res.status(404).json({ 
+        success: false,
+        message: "Email not found. Please check your email or sign up." 
       });
     }
 
+    // 3. Verify password
+    const isPasswordValid = bcrypt.compareSync(password, doctor.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ 
+        success: false,
+        message: "Invalid email or password" 
+      });
+    }
+
+    // 4. Check verification status
+    if (doctor.verificationStatus === 'rejected') {
+      return res.status(403).json({ 
+        success: false,
+        message: "Your account has been rejected. Please contact admin for assistance." 
+      });
+    }
+
+    // 5. Successful login response
     res.status(200).json({
-      message: "Login success",
-      data: foundDoctorFromEmail,
+      success: true,
+      message: doctor.verificationStatus === 'pending' 
+        ? "Login successful (Account pending approval - limited access)" 
+        : "Login successful",
+      data: {
+        _id: doctor._id,
+        name: doctor.name,
+        email: doctor.email,
+        roleId: doctor.roleId,
+        verificationStatus: doctor.verificationStatus,
+        profilePic: doctor.profilePic,
+        specialization: doctor.specialization
+      },
+      isPending: doctor.verificationStatus === 'pending'
     });
 
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  } catch (error) {
+    console.error("Doctor login error:", error);
+    res.status(500).json({ 
+      success: false,
+      message: "An error occurred during login. Please try again later." 
+    });
   }
 };
 
+// const loginDoctor = async(req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const foundDoctorFromEmail = await doctorModel.findOne({email}).populate("roleId");
+    
+//     if (!foundDoctorFromEmail) {
+//       return res.status(404).json({ message: "Email not found" });
+//     }
+
+//     const isMatch = bcrypt.compareSync(password, foundDoctorFromEmail.password);
+    
+//     if (!isMatch) {
+//       return res.status(401).json({ message: "Invalid credentials" });
+//     }
+
+//     if (foundDoctorFromEmail.verificationStatus === 'pending') {
+//       return res.status(403).json({ 
+//         message: "Your account is pending admin approval" 
+//       });
+//     }
+
+//     if (foundDoctorFromEmail.verificationStatus === 'rejected') {
+//       return res.status(403).json({ 
+//         message: "Your account has been rejected. Please contact admin." 
+//       });
+//     }
+
+//     res.status(200).json({
+//       message: "Login success",
+//       data: foundDoctorFromEmail,
+//     });
+
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
 
 
 

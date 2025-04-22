@@ -49,6 +49,7 @@ import PatientPrescriptions from './components/layouts/PatientPrescriptions'
 import PrescriptionDetails from './components/layouts/PrescriptionDetails'
 import EHRDashboard from './components/user/EHRDashboard'
 import { Razorpay } from './components/layouts/Razorpay'
+import PendingApproval from './components/doctor/PendingApproval'
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3000"
@@ -89,6 +90,7 @@ function App() {
           <Route path="/alldoctor" element ={<AllDoctorList/>}></Route>
           <Route path="/appointmentbydoctor/:doctorId" element ={<AppointmentByDoctor/>}></Route>
           <Route path="/services" element ={<Services/>}></Route>
+          <Route path="/doctor/pending-approval" element ={<PendingApproval/>}></Route>
           <Route path="/" element ={<Home/>}></Route>
           <Route path="/*" element ={<Error404/>}></Route>
 
