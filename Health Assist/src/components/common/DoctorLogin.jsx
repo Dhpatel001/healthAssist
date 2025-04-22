@@ -1,13 +1,25 @@
-import React from 'react'
-import "../../assets/login.css"
-import { Link,  useNavigate } from 'react-router-dom'
+import React from 'react';
+import { 
+  Box, 
+  Typography, 
+  TextField, 
+  Button, 
+  Link as MuiLink,
+  Paper,
+  Alert,
+  CircularProgress
+} from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Bounce, toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
 export const DoctorLogin = () => {
-
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors, isSubmitting } 
+  } = useForm();
   const navigate = useNavigate();
   
   const submitHandler = async (data) => {
@@ -15,22 +27,11 @@ export const DoctorLogin = () => {
       const res = await axios.post("/doctorlogin", data);
       
       if (res.status === 200) {
-        // Login successful
         const toastMessage = res.data.isPending 
-          ? '🦄 Login Successful! Your account is pending approval (limited access)' 
-          : '🦄 Login Successfully!';
+          ? 'Login Successful! Your account is pending approval (limited access)' 
+          : 'Login Successfully!';
         
-        toast.success(toastMessage, {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
-        });
+        toast.success(toastMessage);
         
         localStorage.setItem("id", res.data.data._id);
         localStorage.setItem("role", res.data.data.roleId.name);
@@ -38,7 +39,6 @@ export const DoctorLogin = () => {
         
         setTimeout(() => {
           if(res.data.data.roleId.name === "DOCTOR") {
-            // Redirect pending doctors to a different page if needed
             if (res.data.isPending) {
               navigate("/doctor/pending-approval");
             } else {
@@ -48,132 +48,161 @@ export const DoctorLogin = () => {
         }, 1500);
       }
     } catch (error) {
-      // Handle different error responses from backend
       if (error.response) {
         const { status, data } = error.response;
         
         if (status === 403) {
-          // Account rejected
           if (data.message.includes("rejected")) {
-            toast.warning('Your account has been rejected. Please contact admin for assistance.', {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-            });
+            toast.warning('Your account has been rejected. Please contact admin for assistance.');
           }
         } else if (status === 404) {
-          // Email not found
-          toast.error('Email not found. Please check your email or sign up.', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error('Email not found. Please check your email or sign up.');
         } else if (status === 401) {
-          // Invalid credentials
-          toast.error('Invalid email or password', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+          toast.error('Invalid email or password');
         }
       } else {
-        // Network or other errors
-        toast.error('An error occurred. Please try again later.', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+        toast.error('An error occurred. Please try again later.');
       }
     }
   };
 
   const validationSchema = {
-    emailvalidator: {
-      required: {
-        value: true,
-        message: "Email required"
+    email: {
+      required: "Email is required",
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+        message: "Invalid email address"
       }
     },
-    passwordvalidator: {
-      required: {
-        value: true,
-        message: "Password required"
+    password: {
+      required: "Password is required",
+      minLength: {
+        value: 6,
+        message: "Password must be at least 6 characters"
       }
     }
-  }
+  };
 
   return (
-    <>
-      <div className="custom-login-container">
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark"
-          transition={Bounce}
-        />
-        <div className="custom-login-card">
-          <h2 className="custom-login-title">Welcome Back Doctor!</h2>
-          <p className="custom-login-subtitle">Please log in to continue</p>
-          <form onSubmit={handleSubmit(submitHandler)} className="custom-login-form">
-            <div className="custom-form-group">
-              <label htmlFor="email" className="custom-label">
-                Email Address
-              </label>
-              <input 
-                type="email"
-                className="custom-input"
-                placeholder="Enter your email" 
-                {...register("email", validationSchema.emailvalidator)}
-              />
-              <span style={{color:"red"}}>
-                {errors.email?.message}
-              </span>
-            </div>
-            <div className="custom-form-group">
-              <label htmlFor="password" className="custom-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="custom-input"
-                placeholder="Enter your password"
-                {...register("password", validationSchema.passwordvalidator)}
-              />
-              <span style={{color:"red"}}>
-                {errors.password?.message}
-              </span>
-            </div>
-            <button type="submit" className="custom-login-button">
-              Login
-            </button>
-            <p className="custom-forgot-password">
-              <a href="#">Forgot Password?</a>
-            </p>
-            <p className="custom-signup-link">
-              Don't have an account? <Link to="/doctorsignup">Sign up here</Link>
-            </p>
-          </form>
-        </div>
-      </div>
-    </>
-  )
-}
+    <Box
+      sx={{
+        display: 'flex',
+        width:"100vw",
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        bgcolor: 'background.default',
+        p: 2
+      }}
+    >
+      <ToastContainer />
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          width: '100%',
+          maxWidth: 450,
+          borderRadius: 2
+        }}
+      >
+        <Typography 
+          variant="h4" 
+          component="h1" 
+          gutterBottom
+          sx={{ 
+            fontWeight: 700,
+            textAlign: 'center',
+            color: 'primary.main'
+          }}
+        >
+          Welcome Back Doctor!
+        </Typography>
+        <Typography 
+          variant="subtitle1"
+          sx={{
+            textAlign: 'center',
+            mb: 3,
+            color: 'text.secondary'
+          }}
+        >
+          Please log in to continue
+        </Typography>
+
+        <Box
+          component="form"
+          onSubmit={handleSubmit(submitHandler)}
+          sx={{ mt: 2 }}
+        >
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Email Address"
+            variant="outlined"
+            {...register("email", validationSchema.email)}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          />
+
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Password"
+            type="password"
+            variant="outlined"
+            {...register("password", validationSchema.password)}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+          />
+
+          <Button
+            fullWidth
+            variant="contained"
+            type="submit"
+            disabled={isSubmitting}
+            sx={{
+              mt: 3,
+              mb: 2,
+              py: 1.5,
+              fontSize: '1rem'
+            }}
+          >
+            {isSubmitting ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              'Login'
+            )}
+          </Button>
+
+          <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <MuiLink 
+              component={Link} 
+              to="/doctorforgotpassword" 
+              variant="body2"
+              sx={{ color: 'text.secondary' }}
+            >
+              Forgot Password?
+            </MuiLink>
+          </Box>
+
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              textAlign: 'center', 
+              mt: 3,
+              color: 'text.secondary'
+            }}
+          >
+            Don't have an account?{' '}
+            <MuiLink 
+              component={Link} 
+              to="/doctorsignup" 
+              sx={{ fontWeight: 600 }}
+            >
+              Sign up here
+            </MuiLink>
+          </Typography>
+        </Box>
+      </Paper>
+    </Box>
+  );
+};

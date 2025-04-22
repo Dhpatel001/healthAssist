@@ -81,7 +81,7 @@ export const PendingApproval = () => {
             variant="outlined"
             color="primary"
             component={Link}
-            to="/contact"
+            to="/contactus"
             sx={{ px: 4 }}
           >
             Contact Support

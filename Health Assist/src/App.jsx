@@ -50,6 +50,8 @@ import PrescriptionDetails from './components/layouts/PrescriptionDetails'
 import EHRDashboard from './components/user/EHRDashboard'
 import { Razorpay } from './components/layouts/Razorpay'
 import PendingApproval from './components/doctor/PendingApproval'
+import { DoctorForgetPassword } from './components/common/DoctorForgetPassword'
+import { DoctorResetPassword } from './components/common/DoctorResetPassword'
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3000"
@@ -85,7 +87,9 @@ function App() {
           {/* <Route path="/home" element ={<HomePage/>}></Route> */}
           <Route path="/home" element ={<Home/>}></Route>
           <Route path="/forgotpassword" element ={<ForgetPassword/>}></Route>
+          <Route path="/doctorforgotpassword" element ={<DoctorForgetPassword/>}></Route>
           <Route path="/resetpassword/:token" element ={<ResetPassword/>}></Route>
+          <Route path="/doctorresetpassword/:token" element ={<DoctorResetPassword/>}></Route>
           {/* <Route path="/" element ={<HomePage/>}></Route> */}
           <Route path="/alldoctor" element ={<AllDoctorList/>}></Route>
           <Route path="/appointmentbydoctor/:doctorId" element ={<AppointmentByDoctor/>}></Route>

@@ -6,16 +6,14 @@ import {
   Button, 
   Link as MuiLink,
   Paper,
-  Alert,
   CircularProgress
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
-import { Bounce } from 'react-toastify';
 
-export const DoctorSignup = () => {
+export const DoctorForgetPassword = () => {
   const { 
     register, 
     handleSubmit, 
@@ -25,69 +23,24 @@ export const DoctorSignup = () => {
 
   const submitHandler = async (data) => {
     try {
-      data.roleId = "67c5ac9939278f26668be180"; // Hardcoded role ID - consider making this configurable
-      const res = await axios.post("/doctor", data);
-      
-      if (res.status === 201) {
-        toast.success('Signup Successful!', {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          transition: Bounce,
-        });
+      const res = await axios.post("/doctor/forgotpassword", data);
+      if (res.status === 200) {
+        toast.success('Password reset link sent to your email!');
         setTimeout(() => {
           navigate("/doctorlogin");
         }, 1500);
       }
     } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
-        
-        if (status === 400) {
-          toast.error(data.message || 'Validation error');
-        } else if (status === 409) {
-          toast.error('Email already exists');
-        } else {
-          toast.error('An error occurred during signup');
-        }
-      } else {
-        toast.error('Network error. Please try again later.');
-      }
+      toast.error('Error sending reset link. Please try again.');
     }
   };
 
   const validationSchema = {
-    name: {
-      required: "First name is required",
-      minLength: {
-        value: 2,
-        message: "Name must be at least 2 characters"
-      }
-    },
-    phoneNumber: {
-      required: "Phone number is required",
-      pattern: {
-        value: /[6-9]{1}[0-9]{9}/,
-        message: "Phone number is not valid"
-      }
-    },
     email: {
       required: "Email is required",
       pattern: {
         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
         message: "Invalid email address"
-      }
-    },
-    password: {
-      required: "Password is required",
-      pattern: {
-        value: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/,
-        message: "Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters"
       }
     }
   };
@@ -124,7 +77,7 @@ export const DoctorSignup = () => {
             color: 'primary.main'
           }}
         >
-          Create Your Doctor Account
+          Forgot Password
         </Typography>
         <Typography 
           variant="subtitle1"
@@ -134,7 +87,7 @@ export const DoctorSignup = () => {
             color: 'text.secondary'
           }}
         >
-          Join our platform to start helping patients
+          Enter your email to receive a reset link
         </Typography>
 
         <Box
@@ -145,42 +98,11 @@ export const DoctorSignup = () => {
           <TextField
             fullWidth
             margin="normal"
-            label="Full Name"
-            variant="outlined"
-            {...register("name", validationSchema.name)}
-            error={!!errors.name}
-            helperText={errors.name?.message}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Phone Number"
-            variant="outlined"
-            {...register("phoneNumber", validationSchema.phoneNumber)}
-            error={!!errors.phoneNumber}
-            helperText={errors.phoneNumber?.message}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
             label="Email Address"
             variant="outlined"
             {...register("email", validationSchema.email)}
             error={!!errors.email}
             helperText={errors.email?.message}
-          />
-
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Password"
-            type="password"
-            variant="outlined"
-            {...register("password", validationSchema.password)}
-            error={!!errors.password}
-            helperText={errors.password?.message}
           />
 
           <Button
@@ -198,7 +120,7 @@ export const DoctorSignup = () => {
             {isSubmitting ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              'Sign Up'
+              'Send Reset Link'
             )}
           </Button>
 
@@ -210,7 +132,7 @@ export const DoctorSignup = () => {
               color: 'text.secondary'
             }}
           >
-            Already have an account?{' '}
+            Remember your password?{' '}
             <MuiLink 
               component={Link} 
               to="/doctorlogin" 

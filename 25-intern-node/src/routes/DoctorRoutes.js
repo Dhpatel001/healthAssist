@@ -15,6 +15,8 @@ routes.delete("/doctor/:id",doctorController.deleteDoctor)
 routes.get("/doctorbyid/:id",doctorController.getDoctorById)
 routes.get("/doctorbyidfor/:doctorId",doctorController.getDoctorById)
 routes.post("/adddocpic",doctorController.addUserWithFile)
+routes.post("/doctor/forgotpassword",doctorController.forgotPassword)
+routes.post("/doctor/resetpassword",doctorController.resetpassword)
 routes.put("/updateddoctor/:id",doctorController.getDoctorByIdandUpdate)
 routes.get('/getdoctorsbyuserid/:userId', doctorController.getAllDoctorByUserId);
 routes.put("/updatedoctorphoto/:id", doctorController.updateDoctorPhoto);

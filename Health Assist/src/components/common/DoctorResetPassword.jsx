@@ -12,7 +12,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from 'axios';
 
-export const ResetPassword = () => {
+export const DoctorResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
   const { 
@@ -23,7 +23,7 @@ export const ResetPassword = () => {
 
   const submitHandler = async (data) => {
     try {
-      const res = await axios.post("/user/resetpassword", {
+      const res = await axios.post("/doctor/resetpassword", {
         token: token,
         password: data.password
       });
@@ -31,7 +31,7 @@ export const ResetPassword = () => {
       if (res.status === 200) {
         toast.success('Password reset successfully!');
         setTimeout(() => {
-          navigate("/login");
+          navigate("/doctorlogin");
         }, 1500);
       }
     } catch (error) {

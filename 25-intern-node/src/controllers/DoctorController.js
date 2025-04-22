@@ -2,7 +2,10 @@ const doctorModel = require("../models/DoctorModel");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path =require("path")
+const mailUtil = require("../utils/MailUtils")
 
+const jwt = require("jsonwebtoken");
+const secret = "secret"; // Use the same secret as in UserController or from environment variables
 const HealthInsight = require("../models/HealthInsightAndAlertModel");
 
 const cloudinaryUtil = require("../utils/CloudanryUtil");
@@ -499,12 +502,57 @@ const createPatientInsight = async (req, res) => {
   }
 };
 
+// Add these methods to DoctorController.js
+
+const forgotPassword = async (req, res) => {
+  const email = req.body.email;
+  const foundDoctor = await doctorModel.findOne({ email: email });
+
+  if (foundDoctor) {
+    const token = jwt.sign(foundDoctor.toObject(), secret);
+    console.log(token);
+    const url = `http://localhost:5173/doctorresetpassword/${token}`;
+    const mailContent = `<html>
+                          <a href ="${url}">Reset password</a>
+                          </html>`;
+    // Send email...
+    await mailUtil.sendingMail(foundDoctor.email, "Reset password", mailContent);
+    res.json({
+      message: "Reset password link sent to your email.",
+    });
+  } else {
+    res.status(404).json({
+      message: "Doctor not found with this email.",
+    });
+  }
+};
+
+const resetpassword = async (req, res) => {
+  const token = req.body.token;
+  const newPassword = req.body.password;
+
+  const doctorFromToken = jwt.verify(token, secret);
+  
+  // Password encryption
+  const salt = bcrypt.genSaltSync(10);
+  const hashedPassword = bcrypt.hashSync(newPassword, salt);
+
+  const updatedDoctor = await doctorModel.findByIdAndUpdate(doctorFromToken._id, {
+    password: hashedPassword,
+  });
+  
+  res.json({
+    message: "Password updated successfully.",
+  });
+};
+
 
 
 module.exports = {
     getAlldoctor,addDoctor,deleteDoctor,signup,loginDoctor,addUserWithFile,getDoctorByIdandUpdate,getAllDoctorByUserId,updateDoctorPhoto,getAllSpecializations,getDoctorsBySpecialization,
     getDoctorById,
     getDoctorInsights,
-    createPatientInsight,
+    createPatientInsight,forgotPassword,
+    resetpassword,
 
   }
