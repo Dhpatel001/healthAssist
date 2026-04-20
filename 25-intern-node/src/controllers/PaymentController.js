@@ -7,8 +7,8 @@ const Appointment = require('../models/AppointmentModel');
 
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_BJfA9tfictA1Jg",
-  key_secret: "gqPxhZ4gfiTLhPawXOLTMJA0",
+  key_id: "rzp_test_KR0bLbkG8oOwk7",
+  key_secret: "eqCRVFF74lk3ShQVGmQyF5pd",
 });
 // exports.createOrder = async (req, res) => {
 //   try {

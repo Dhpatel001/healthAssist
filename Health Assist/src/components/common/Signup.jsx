@@ -33,7 +33,7 @@ export const Signup = () => {
         }, 1500);
       }
     } catch (error) {
-      toast.error('Error occurred during signup. Please try again.');
+      toast.error(error.response?.data?.message || 'Error occurred during signup. Please try again.');
     }
   };
 

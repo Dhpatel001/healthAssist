@@ -42,7 +42,7 @@ export const Razorpay = () => {
     }
 
     const options = {
-      key: "rzp_test_BJfA9tfictA1Jg",
+      key: "rzp_test_KR0bLbkG8oOwk7",
       amount: orderData.amount,
       currency: orderData.currency,
       name: "Test Corp",

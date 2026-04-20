@@ -53,3 +53,7 @@ app.get("/user",(req,res)=>{
     })
 });
 
+
+
+app password in google account for mailutils
+  

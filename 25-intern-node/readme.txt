@@ -1,0 +1,1 @@
+for backend run : node app.js

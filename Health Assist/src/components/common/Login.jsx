@@ -29,16 +29,16 @@ export const Login = () => {
         toast.success('Login Successfully!');
         
         localStorage.setItem("id", res.data.data._id);
-        localStorage.setItem("role", res.data.data.roleId.name);
+        localStorage.setItem("role", res.data.data.roleId?.name || res.data.data.role);
         
         setTimeout(() => {
-          if(res.data.data.roleId.name === "USER") {
+          if((res.data.data.roleId?.name || res.data.data.role) === "USER") {
             navigate("/user/profile");
           }
         }, 1500);
       }
     } catch (error) {
-      toast.error('Invalid email or password');
+      toast.error(error.response?.data?.message || 'Invalid email or password');
     }
   };
 

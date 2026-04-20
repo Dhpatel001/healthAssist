@@ -27,46 +27,99 @@ const upload = multer({
 
 
 const loginUser = async(req,res)=>{
+  try {
+    const { email, password } = req.body;
 
-    const email =req.body.email;
-    const password= req.body.password;
-
-    // const foundUserFromEmail=userModel.findOne({email:req.body.email})
-    const foundUserFromEmail= await userModel.findOne({email:email}).populate("roleId");
-    console.log(foundUserFromEmail);
-    if (foundUserFromEmail != null) {
-      
-    const isMatch = bcrypt.compareSync(password, foundUserFromEmail.password);
-      
-      if (isMatch == true) {
-        res.status(200).json({
-          message: "login success",
-          data: foundUserFromEmail,
-        });
-      } else { 
-        res.status(404).json({
-          message: "invalid cred..",
-        });
-      }
-    } else {
-      res.status(404).json({
-        message: "Email not found..",
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required",
       });
     }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const foundUserFromEmail = await userModel
+      .findOne({ email: normalizedEmail })
+      .collation({ locale: "en", strength: 2 })
+      .populate("roleId");
+
+    if (!foundUserFromEmail) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    const storedPassword = foundUserFromEmail.password || "";
+    const isBcryptHash = storedPassword.startsWith("$2a$") || storedPassword.startsWith("$2b$");
+    const isMatch = isBcryptHash
+      ? bcrypt.compareSync(password, storedPassword)
+      : password === storedPassword;
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    if (!isBcryptHash) {
+      const salt = bcrypt.genSaltSync(10);
+      foundUserFromEmail.password = bcrypt.hashSync(password, salt);
+      await foundUserFromEmail.save();
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Login success",
+      data: foundUserFromEmail,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Login failed. Please try again.",
+      error: err.message,
+    });
+  }
   };
 
 const signup = async (req, res) => {
     
   try {
+    const email = req.body.email?.trim().toLowerCase();
+
+    if (!email || !req.body.password) {
+      return res.status(400).json({
+        message: "Email and password are required",
+      });
+    }
+
+    const existingUser = await userModel
+      .findOne({ email })
+      .collation({ locale: "en", strength: 2 });
+
+    if (existingUser) {
+      return res.status(409).json({
+        message: "Email already registered. Please login instead.",
+      });
+    }
+
     //password encrupt..
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(req.body.password, salt);
     req.body.password = hashedPassword;
+    req.body.email = email;
+    req.body.role = req.body.role || "USER";
+
     const   createdUser = await userModel.create(req.body);
 
     //send mail to user...
     //const mailResponse = await mailUtil.sendingMail(createdUser.email,"welcome to eadvertisement","this is welcome mail")
-    await mailUtil.sendingMail(createdUser.email,"welcome to Healthassist","this is welcome mail")
+    mailUtil
+      .sendingMail(createdUser.email, "welcome to Healthassist", "this is welcome mail")
+      .catch((mailErr) => {
+        console.error("Welcome email failed:", mailErr.message);
+      });
 
     res.status(201).json({
       message: "user created..",
