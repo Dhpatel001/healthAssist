@@ -23,7 +23,7 @@ router.get('/patient/:patientId/appointment/:appointmentId', prescriptionControl
 
 // Prescription routes
 router.post("/prescriptions", prescriptionController.createPrescription);
-router.get("/prescriptions/:patientId/:appointmentId", prescriptionController.getPrescriptionByAppointment);
+router.get("/prescriptions/:patientId/:appointmentId", prescriptionController.getPrescriptionByPatientAndAppointment);
 router.get("/prescriptions/:patientId",prescriptionController.getPatientPrescriptions);
 
 module.exports = router;

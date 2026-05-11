@@ -10,18 +10,11 @@ export const UserUpdatedProfile = () => {
     const navigate = useNavigate();
     const userId = localStorage.getItem("id");
 
+    const { register, handleSubmit, setValue } = useForm();
+
     useEffect(() => {
       // getAllStates();
     }, []);
-
-    console.log("User ID from localStorage:", userId);
-    
-    if (!userId) {
-      console.error("User ID not found in localStorage!");
-      return;
-    }
-    
-    const { register, handleSubmit, setValue } = useForm();
 
     useEffect(() => {
       const fetchUserData = async () => {
@@ -40,6 +33,13 @@ export const UserUpdatedProfile = () => {
 
       if (userId) fetchUserData();
     }, [userId, setValue]);
+
+    console.log("User ID from localStorage:", userId);
+    
+    if (!userId) {
+      console.error("User ID not found in localStorage!");
+      return <div className="container mt-4"><h3>User ID not found. Please log in.</h3></div>;
+    }
 
     const submitHandler = async (data) => {
       try {

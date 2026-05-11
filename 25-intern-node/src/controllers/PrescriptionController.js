@@ -188,7 +188,7 @@ exports.createPrescription = async (req, res) => {
 
 exports.getPrescriptionsByDoctorAndPatient = async (req, res) => {
   try {
-    const prescriptions = await PrescriptionModel.find({
+    const prescriptions = await Prescription.find({
       doctorId: req.params.doctorId,
       patientId: req.params.patientId
     }).sort({ createdAt: -1 });
@@ -202,7 +202,7 @@ exports.getPrescriptionsByDoctorAndPatient = async (req, res) => {
 // Add to PrescriptionController.js
 exports.getPrescriptionByAppointment = async (req, res) => {
   try {
-    const prescription = await PrescriptionModel.findOne({ 
+    const prescription = await Prescription.findOne({ 
       appointmentId: req.params.appointmentId 
     }).populate('doctorId patientId');
 
@@ -325,34 +325,7 @@ exports.getPrescriptionByPatientAndAppointment = async (req, res) => {
 //   }
 // };
 
-exports.getPrescriptionByAppointment = async (req, res) => {
-  try {
-    const { patientId, appointmentId } = req.params;
 
-    const prescription = await Prescription.findOne({
-      patientId,
-      appointmentId
-    }).populate('doctorId');
-
-    if (!prescription) {
-      return res.status(404).json({
-        success: false,
-        message: "Prescription not found"
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: prescription
-    });
-
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message
-    });
-  }
-};
 
 exports.getPatientPrescriptions = async (req, res) => {
   try {
